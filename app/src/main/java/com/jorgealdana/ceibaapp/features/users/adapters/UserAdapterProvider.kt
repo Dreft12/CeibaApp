@@ -7,4 +7,8 @@ interface UserAdapterProvider {
     fun getListUser(): List<User>? {
         return null
     }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
 }
