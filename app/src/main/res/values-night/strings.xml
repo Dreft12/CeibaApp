@@ -2,4 +2,5 @@
 <resources>
     <string name="phone_icon_text">phoneIcon</string>
     <string name="email_icon_text">emailIcon</string>
+    <string name="loading">Cargando datos...</string>
 </resources>

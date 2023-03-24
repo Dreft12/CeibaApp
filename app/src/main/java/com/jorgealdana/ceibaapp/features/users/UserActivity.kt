@@ -9,6 +9,7 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,14 +22,14 @@ import com.jorgealdana.ceibaapp.features.users.adapters.UserAdapterProvider
 import com.jorgealdana.ceibaapp.features.users.viewModel.UserViewModel
 import com.jorgealdana.ceibaapp.features.users.viewModel.UserViewModelFactory
 import com.jorgealdana.ceibaapp.models.User
-import com.jorgealdana.ceibaapp.utils.Constants
+import com.jorgealdana.ceibaapp.utils.DialogUtils
 
 class UserActivity : AppCompatActivity(), UserAdapterProvider {
 
     private lateinit var binding: UserActivityBinding
-    private lateinit var userAdapterProvider: UserAdapterProvider
     private lateinit var mAdapter: UserAdapter
     private lateinit var launcher: ActivityResultLauncher<Intent>
+    private lateinit var dialogUtils: AlertDialog
     private val userViewModel: UserViewModel by viewModels {
         UserViewModelFactory((application as App).userRepository)
     }
@@ -39,18 +40,19 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider {
         setContentView(binding.root)
         setSupportActionBar((binding.materialToolbar as Toolbar))
         callRequest()
+        initAdapter(emptyList())
         initListeners()
         userViewModel.checkIfEmpty()
-
-        launcher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    var data = result.data
-                }
-            }
     }
 
     private fun initListeners() {
+        launcher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    // do something
+                }
+            }
+
         binding.txtSearchUser.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: android.text.Editable?) {
 
@@ -73,8 +75,10 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider {
     }
 
     private fun callRequest() {
+        dialogUtils = DialogUtils.showLoadingDialog(this).also { it.show() }
         userViewModel.users.observe(this) {
-            initAdapter(it)
+            mAdapter.setItems(it)
+            if(it.isNotEmpty()) dialogUtils.dismiss()
         }
     }
 
@@ -84,6 +88,7 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(this@UserActivity, RecyclerView.VERTICAL, false)
         }
+        if(users.isNotEmpty()) dialogUtils.dismiss()
     }
 
     override fun onItemClick(position: Int) {

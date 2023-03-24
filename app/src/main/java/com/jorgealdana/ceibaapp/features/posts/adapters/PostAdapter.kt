@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jorgealdana.ceibaapp.databinding.ItemPostListBinding
 import com.jorgealdana.ceibaapp.models.Post
 
-class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class PostAdapter(private var postList: List<Post>) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: ItemPostListBinding): RecyclerView.ViewHolder(itemView.root){
         val title = itemView.titleTxt
@@ -23,5 +23,9 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
         val item = postList[position]
         holder.title.text = item.title
         holder.body.text = item.body
+    }
+    fun setItems(post: List<Post>) {
+        postList = post
+        notifyDataSetChanged()
     }
 }
