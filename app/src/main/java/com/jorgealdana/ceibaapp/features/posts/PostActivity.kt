@@ -3,10 +3,12 @@ package com.jorgealdana.ceibaapp.features.posts
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.google.gson.Gson
 import com.jorgealdana.ceibaapp.App
 import com.jorgealdana.ceibaapp.databinding.ActivityPostBinding
@@ -15,11 +17,14 @@ import com.jorgealdana.ceibaapp.features.posts.viewModel.PostViewModel
 import com.jorgealdana.ceibaapp.features.posts.viewModel.PostViewModelFactory
 import com.jorgealdana.ceibaapp.models.Post
 import com.jorgealdana.ceibaapp.models.User
+import com.jorgealdana.ceibaapp.utils.DialogUtils
 
 class PostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPostBinding
     private lateinit var mAdapter: PostAdapter
+    private lateinit var dialogUtils: AlertDialog
+
 
     private val postViewModel: PostViewModel by viewModels {
         PostViewModelFactory((application as App).postRepository)
@@ -30,17 +35,22 @@ class PostActivity : AppCompatActivity() {
         binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUpToolbar()
+        dialogUtils = DialogUtils.showLoadingDialog(this)
+        dialogUtils.show()
         setUpTitles()
         initAdapter()
     }
 
     private fun initAdapter() {
+        mAdapter = PostAdapter(emptyList())
+        binding.listPosts.apply {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(this@PostActivity, RecyclerView.VERTICAL, false)
+        }
+
         postViewModel.posts.observe(this) {
-            mAdapter = PostAdapter(it)
-            binding.listPosts.apply {
-                adapter = mAdapter
-                layoutManager = LinearLayoutManager(this@PostActivity, RecyclerView.VERTICAL, false)
-            }
+            mAdapter.setItems(it)
+            if (it.isNotEmpty()) dialogUtils.dismiss()
         }
     }
     private fun setUpTitles() {

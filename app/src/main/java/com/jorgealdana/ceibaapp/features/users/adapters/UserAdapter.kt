@@ -37,4 +37,9 @@ class UserAdapter(private var userList: List<User>, private var onItemClickListe
         userList = filterItems
         notifyDataSetChanged()
     }
+
+    fun setItems(userList: List<User>) {
+        this.userList = userList
+        notifyDataSetChanged()
+    }
 }
