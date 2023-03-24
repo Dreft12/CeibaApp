@@ -4,7 +4,7 @@ import com.jorgealdana.ceibaapp.models.Post
 
 interface PostProvider {
 
-    fun getPosts(): List<Post>? {
+    fun getPosts(): ArrayList<Post>? {
         return null
     }
 }

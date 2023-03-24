@@ -8,22 +8,27 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(private val repository: UsersRepository) : ViewModel() {
 
-    private val _users = MutableLiveData<List<User>>()
+    private val _users = MutableLiveData<List<User>>(emptyList())
     val users: LiveData<List<User>> = _users
 
-    init {
-        _users.value = emptyList()
-    }
-
-    fun insert(user: User) = viewModelScope.launch {
+    private fun insert(user: User) = viewModelScope.launch {
         repository.insert(user)
     }
+    fun checkIfEmpty() = viewModelScope.launch {
+        _users.value = repository.getAllUsersFromDB()
+        if (_users.value.isNullOrEmpty()) {
+            loadUsers()
+        }
+    }
 
-    fun loadUsers() {
+    private suspend fun loadUsers() {
         viewModelScope.launch {
+            val result = repository.getUsers()
+            _users.value = result
             try {
-                val result = repository.getUsers()
-                _users.value = result
+                _users.value?.forEach { user ->
+                    insert(user)
+                }
             } catch (e: Exception) {
                 Log.e("Error", e.message.toString())
             }

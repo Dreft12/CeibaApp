@@ -14,5 +14,5 @@ interface UserDao {
     suspend fun insert(user: User)
 
     @Query("SELECT * FROM ${Constants.TABLE_USERS} ORDER BY id ASC")
-    fun getUsers(): Flow<List<User>>
+    suspend fun getUsers(): List<User>
 }
