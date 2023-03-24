@@ -91,9 +91,9 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider {
         if(users.isNotEmpty()) dialogUtils.dismiss()
     }
 
-    override fun onItemClick(position: Int) {
+    override fun onItemClick(user: User) {
         val intent = Intent(this, PostActivity::class.java)
-        intent.putExtra("user", Gson().toJson(userViewModel.users.value?.get(position)))
+        intent.putExtra("user", Gson().toJson(userViewModel.users.value?.find { it.id == user.id }))
         launcher.launch(intent)
     }
 }
