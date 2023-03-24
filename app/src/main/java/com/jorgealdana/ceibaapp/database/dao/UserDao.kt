@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jorgealdana.ceibaapp.models.User
 import com.jorgealdana.ceibaapp.utils.Constants
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {

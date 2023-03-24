@@ -1,11 +1,8 @@
 package com.jorgealdana.ceibaapp
 
-import android.app.Application
-import android.provider.Settings.Global
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jorgealdana.ceibaapp.database.AppDB
 import com.jorgealdana.ceibaapp.database.dao.PostDao
-import com.jorgealdana.ceibaapp.database.dao.UserDao
 import com.jorgealdana.ceibaapp.features.posts.repository.PostRepository
 import com.jorgealdana.ceibaapp.features.users.repository.UsersRepository
 import com.jorgealdana.ceibaapp.models.Post
@@ -13,13 +10,10 @@ import com.jorgealdana.ceibaapp.models.User
 import com.jorgealdana.ceibaapp.network.ApiService
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.*
-import org.junit.Assert
 import org.junit.Test
 
 import org.junit.Assert.*
-import org.junit.internal.runners.JUnit38ClassRunner
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.junit.runners.Suite
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -68,7 +62,7 @@ class ExampleUnitTest {
     @Test
     fun `test my suspend function to insert a user`() = runTest {
         val db =
-            AppDB.getDatabase(App().applicationContext, CoroutineScope(StandardTestDispatcher()))
+            AppDB.getDatabase(App().applicationContext)
         val testUser = User(1, "name", "username", "email", "phone")
         db.userDao().insert(testUser)
         val user = db.userDao().getUserById(1)
@@ -80,7 +74,7 @@ class ExampleUnitTest {
     @Test
     fun `test my suspend function to get users`() = runTest {
         val db =
-            AppDB.getDatabase(App().applicationContext, CoroutineScope(StandardTestDispatcher()))
+            AppDB.getDatabase(App().applicationContext)
         val userDao = db.userDao()
         val retrofit = Retrofit.Builder()
             .baseUrl("https://jsonplaceholder.typicode.com/")

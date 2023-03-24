@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jorgealdana.ceibaapp.models.Post
-import com.jorgealdana.ceibaapp.models.User
 import com.jorgealdana.ceibaapp.utils.Constants
 import kotlinx.coroutines.flow.Flow
 

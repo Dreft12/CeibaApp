@@ -9,8 +9,6 @@ import kotlinx.coroutines.withContext
 
 class PostRepository(private val postsDao: PostDao, private val apiService: ApiService) {
 
-    val allPost = postsDao.getPosts()
-
     @WorkerThread
     suspend fun insert(post: Post) {
         postsDao.insert(post)
