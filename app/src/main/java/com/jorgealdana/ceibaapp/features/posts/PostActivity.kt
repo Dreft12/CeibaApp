@@ -40,7 +40,7 @@ class PostActivity : AppCompatActivity() {
 
     private fun initAdapter() {
         postProvider = object : PostProvider {
-            override fun getPosts(): ArrayList<Post>? {
+            override fun getPosts(): List<Post>? {
                 return postViewModel.posts.value
             }
         }
