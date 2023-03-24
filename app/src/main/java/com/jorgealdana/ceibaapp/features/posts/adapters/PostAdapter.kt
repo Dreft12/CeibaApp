@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jorgealdana.ceibaapp.databinding.ItemPostListBinding
+import com.jorgealdana.ceibaapp.models.Post
 
-class PostAdapter(private val provider: PostProvider) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: ItemPostListBinding): RecyclerView.ViewHolder(itemView.root){
         val title = itemView.titleTxt
@@ -16,11 +17,11 @@ class PostAdapter(private val provider: PostProvider) : RecyclerView.Adapter<Pos
         return ViewHolder(ItemPostListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun getItemCount() = provider.getPosts()?.size!!
+    override fun getItemCount() = postList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = provider.getPosts()?.get(position)
-        holder.title.text = item?.title
-        holder.body.text = item?.body
+        val item = postList[position]
+        holder.title.text = item.title
+        holder.body.text = item.body
     }
 }

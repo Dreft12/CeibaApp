@@ -2,4 +2,6 @@
     <string name="app_name">Prueba de Ingreso</string>
     <string name="search_user">Buscar Usuario</string>
     <string name="see_posts">Ver publicaciones</string>
+    <string name="phone_icon_text">phoneIcon</string>
+    <string name="email_icon_text">emailIcon</string>
 </resources>

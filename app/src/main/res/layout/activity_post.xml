@@ -36,7 +36,6 @@
             android:id="@+id/nameTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:textColor="@color/purple_500"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -53,13 +52,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 app:srcCompat="@drawable/baseline_phone_24"
-                app:tint="@color/purple_500" />
+                app:tint="@color/purple_500"
+                android:contentDescription="@string/phone_icon_text"
+                tools:ignore="InefficientWeight" />
 
             <TextView
                 android:id="@+id/emailPostTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -75,13 +75,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 app:srcCompat="@drawable/baseline_email_24"
-                app:tint="@color/purple_500" />
+                app:tint="@color/purple_500"
+                tools:ignore="InefficientWeight"
+                android:contentDescription="@string/email_icon_text" />
 
             <TextView
                 android:id="@+id/phoneTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:textSize="18sp" />
         </LinearLayout>
 

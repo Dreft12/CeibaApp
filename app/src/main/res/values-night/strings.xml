@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_icon_text">phoneIcon</string>
+    <string name="email_icon_text">emailIcon</string>
+</resources>

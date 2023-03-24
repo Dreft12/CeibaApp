@@ -11,11 +11,8 @@ import com.google.gson.Gson
 import com.jorgealdana.ceibaapp.App
 import com.jorgealdana.ceibaapp.databinding.ActivityPostBinding
 import com.jorgealdana.ceibaapp.features.posts.adapters.PostAdapter
-import com.jorgealdana.ceibaapp.features.posts.adapters.PostProvider
 import com.jorgealdana.ceibaapp.features.posts.viewModel.PostViewModel
 import com.jorgealdana.ceibaapp.features.posts.viewModel.PostViewModelFactory
-import com.jorgealdana.ceibaapp.features.users.adapters.UserAdapter
-import com.jorgealdana.ceibaapp.features.users.adapters.UserAdapterProvider
 import com.jorgealdana.ceibaapp.models.Post
 import com.jorgealdana.ceibaapp.models.User
 
@@ -23,7 +20,6 @@ class PostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPostBinding
     private lateinit var mAdapter: PostAdapter
-    private lateinit var postProvider: PostProvider
 
     private val postViewModel: PostViewModel by viewModels {
         PostViewModelFactory((application as App).postRepository)
@@ -39,15 +35,12 @@ class PostActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        postProvider = object : PostProvider {
-            override fun getPosts(): List<Post>? {
-                return postViewModel.posts.value
+        postViewModel.posts.observe(this) {
+            mAdapter = PostAdapter(it)
+            binding.listPosts.apply {
+                adapter = mAdapter
+                layoutManager = LinearLayoutManager(this@PostActivity, RecyclerView.VERTICAL, false)
             }
-        }
-        mAdapter = PostAdapter(postProvider)
-        binding.listPosts.apply {
-            adapter = mAdapter
-            layoutManager = LinearLayoutManager(this@PostActivity, RecyclerView.VERTICAL, false)
         }
     }
     private fun setUpTitles() {
@@ -56,10 +49,6 @@ class PostActivity : AppCompatActivity() {
         binding.nameTxt.text = user.name
         binding.emailPostTxt.text = user.email
         binding.phoneTxt.text = user.phone
-
-        postViewModel.posts.observe(this) {
-            mAdapter.notifyDataSetChanged()
-        }
     }
 
     private fun setUpToolbar() {
