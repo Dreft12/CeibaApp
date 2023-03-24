@@ -14,7 +14,6 @@
         android:id="@+id/nameUserTxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Jhon Doe"
         android:textColor="@color/purple_500"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -38,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             app:srcCompat="@drawable/baseline_phone_24"
-            app:tint="@color/purple_500" />
+            app:tint="@color/purple_500"
+            android:contentDescription="@string/phone_icon_text" />
 
         <TextView
             android:id="@+id/phoneNumberTxt"
@@ -47,7 +47,6 @@
             android:layout_weight="1"
             android:paddingStart="@dimen/paddingStart"
             android:paddingEnd="@dimen/paddingEnd"
-            android:text="TextView"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>
@@ -68,7 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             app:srcCompat="@drawable/baseline_email_24"
-            app:tint="@color/purple_500" />
+            app:tint="@color/purple_500"
+            android:contentDescription="@string/email_icon_text" />
 
         <TextView
             android:id="@+id/emailTxt"
@@ -77,7 +77,6 @@
             android:layout_weight="1"
             android:paddingStart="@dimen/paddingStart"
             android:paddingEnd="@dimen/paddingEnd"
-            android:text="TextView"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>

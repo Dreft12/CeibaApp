@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextWatcher
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -21,7 +23,7 @@ import com.jorgealdana.ceibaapp.features.users.viewModel.UserViewModelFactory
 import com.jorgealdana.ceibaapp.models.User
 import com.jorgealdana.ceibaapp.utils.Constants
 
-class UserActivity : AppCompatActivity(), UserAdapterProvider.OnItemClickListener {
+class UserActivity : AppCompatActivity(), UserAdapterProvider {
 
     private lateinit var binding: UserActivityBinding
     private lateinit var userAdapterProvider: UserAdapterProvider
@@ -36,8 +38,8 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider.OnItemClickListene
         binding = UserActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar((binding.materialToolbar as Toolbar))
-        initAdapter()
         callRequest()
+        initListeners()
         userViewModel.checkIfEmpty()
 
         launcher =
@@ -48,19 +50,36 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider.OnItemClickListene
             }
     }
 
+    private fun initListeners() {
+        binding.txtSearchUser.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: android.text.Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                userViewModel.filterItems(s.toString())?.let {
+                    mAdapter.setFilterItems(it)
+                    binding.listEmptyTxt.visibility = if (it.isEmpty()) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+                }
+            }
+        })
+    }
+
     private fun callRequest() {
         userViewModel.users.observe(this) {
-            mAdapter.notifyDataSetChanged()
+            initAdapter(it)
         }
     }
 
-    private fun initAdapter() {
-        userAdapterProvider = object : UserAdapterProvider {
-            override fun getListUser(): ArrayList<User>? {
-                return userViewModel.users.value?.let { ArrayList(it) }
-            }
-        }
-        mAdapter = UserAdapter(userAdapterProvider, this)
+    private fun initAdapter(users: List<User>) {
+        mAdapter = UserAdapter(users, this)
         binding.listUserRecycler.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(this@UserActivity, RecyclerView.VERTICAL, false)
@@ -69,7 +88,7 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider.OnItemClickListene
 
     override fun onItemClick(position: Int) {
         val intent = Intent(this, PostActivity::class.java)
-        intent.putExtra("user", Gson().toJson(userViewModel.users?.value?.get(position)))
+        intent.putExtra("user", Gson().toJson(userViewModel.users.value?.get(position)))
         launcher.launch(intent)
     }
 }

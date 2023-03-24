@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jorgealdana.ceibaapp.databinding.ItemUserListBinding
+import com.jorgealdana.ceibaapp.models.User
 
-class UserAdapter(private val userAdapterProvider: UserAdapterProvider, private var onItemClickListener: UserAdapterProvider.OnItemClickListener) :
+class UserAdapter(private var userList: List<User>, private var onItemClickListener: UserAdapterProvider) :
     RecyclerView.Adapter<UserAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: ItemUserListBinding) : RecyclerView.ViewHolder(itemView.root) {
@@ -19,16 +20,21 @@ class UserAdapter(private val userAdapterProvider: UserAdapterProvider, private 
         return ItemViewHolder(ItemUserListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun getItemCount() = userAdapterProvider.getListUser()?.size!!
+    override fun getItemCount() = userList.size
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = userAdapterProvider.getListUser()?.get(position)
-        holder.emailText.text = item?.email
-        holder.name.text = item?.name
-        holder.phoneText.text = item?.phone
+        val item = userList[position]
+        holder.emailText.text = item.email
+        holder.name.text = item.name
+        holder.phoneText.text = item.phone
 
         holder.verPosts.setOnClickListener {
             onItemClickListener.onItemClick(position)
         }
+    }
+
+    fun setFilterItems(filterItems: List<User>) {
+        userList = filterItems
+        notifyDataSetChanged()
     }
 }
