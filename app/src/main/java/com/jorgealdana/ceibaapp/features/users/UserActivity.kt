@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextWatcher
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -59,7 +60,14 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                userViewModel.filterItems(s.toString())?.let { mAdapter.setFilterItems(it) }
+                userViewModel.filterItems(s.toString())?.let {
+                    mAdapter.setFilterItems(it)
+                    binding.listEmptyTxt.visibility = if (it.isEmpty()) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+                }
             }
         })
     }
