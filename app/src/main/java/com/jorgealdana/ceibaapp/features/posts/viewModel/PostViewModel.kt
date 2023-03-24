@@ -11,12 +11,8 @@ import kotlinx.coroutines.launch
 
 class PostViewModel(private val repository: PostRepository) : ViewModel() {
 
-    private val _posts = MutableLiveData<List<Post>>()
+    private val _posts = MutableLiveData<List<Post>>(emptyList())
     val posts: LiveData<List<Post>> = _posts
-
-    init {
-        _posts.value = emptyList()
-    }
 
     fun insert(post: Post) = viewModelScope.launch {
         repository.insert(post)

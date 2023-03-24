@@ -38,7 +38,7 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider.OnItemClickListene
         setSupportActionBar((binding.materialToolbar as Toolbar))
         initAdapter()
         callRequest()
-        userViewModel.loadUsers()
+        userViewModel.checkIfEmpty()
 
         launcher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -56,8 +56,8 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider.OnItemClickListene
 
     private fun initAdapter() {
         userAdapterProvider = object : UserAdapterProvider {
-            override fun getListUser(): List<User>? {
-                return userViewModel.users.value
+            override fun getListUser(): ArrayList<User>? {
+                return userViewModel.users.value?.let { ArrayList(it) }
             }
         }
         mAdapter = UserAdapter(userAdapterProvider, this)
@@ -69,7 +69,7 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider.OnItemClickListene
 
     override fun onItemClick(position: Int) {
         val intent = Intent(this, PostActivity::class.java)
-        intent.putExtra("user", Gson().toJson(userViewModel.users.value?.get(position)))
+        intent.putExtra("user", Gson().toJson(userViewModel.users?.value?.get(position)))
         launcher.launch(intent)
     }
 }

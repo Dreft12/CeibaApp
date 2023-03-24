@@ -16,8 +16,8 @@ class PostRepository(private val postsDao: PostDao, private val apiService: ApiS
         postsDao.insert(post)
     }
 
-    suspend fun getPosts(id: Int): List<Post> = withContext(Dispatchers.IO) {
+    suspend fun getPosts(id: Int): ArrayList<Post> = withContext(Dispatchers.IO) {
         val response = apiService.getPosts(id)
-        if (response.isSuccessful) response.body()!! else emptyList()
+        (if (response.isSuccessful) response.body()!! else emptyList()) as ArrayList<Post>
     }
 }
