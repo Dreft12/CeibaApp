@@ -1,10 +1,12 @@
 package com.jorgealdana.ceibaapp.features.users.viewModel
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.jorgealdana.ceibaapp.features.users.repository.UsersRepository
 import com.jorgealdana.ceibaapp.models.User
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val repository: UsersRepository) : ViewModel() {

@@ -1,11 +1,13 @@
 package com.jorgealdana.ceibaapp.features.users.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jorgealdana.ceibaapp.databinding.ItemUserListBinding
 import com.jorgealdana.ceibaapp.models.User
 
+@SuppressLint("NotifyDataSetChanged")
 class UserAdapter(private var userList: List<User>, private var onItemClickListener: UserAdapterProvider) :
     RecyclerView.Adapter<UserAdapter.ItemViewHolder>() {
 

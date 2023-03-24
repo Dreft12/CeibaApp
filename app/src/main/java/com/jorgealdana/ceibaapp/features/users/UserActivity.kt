@@ -47,10 +47,8 @@ class UserActivity : AppCompatActivity(), UserAdapterProvider {
 
     private fun initListeners() {
         launcher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    // do something
-                }
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+
             }
 
         binding.txtSearchUser.addTextChangedListener(object : TextWatcher {

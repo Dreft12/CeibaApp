@@ -8,14 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.google.gson.Gson
 import com.jorgealdana.ceibaapp.App
 import com.jorgealdana.ceibaapp.databinding.ActivityPostBinding
 import com.jorgealdana.ceibaapp.features.posts.adapters.PostAdapter
 import com.jorgealdana.ceibaapp.features.posts.viewModel.PostViewModel
 import com.jorgealdana.ceibaapp.features.posts.viewModel.PostViewModelFactory
-import com.jorgealdana.ceibaapp.models.Post
 import com.jorgealdana.ceibaapp.models.User
 import com.jorgealdana.ceibaapp.utils.DialogUtils
 

@@ -1,5 +1,6 @@
 package com.jorgealdana.ceibaapp.features.posts.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,8 @@ class PostAdapter(private var postList: List<Post>) : RecyclerView.Adapter<PostA
         holder.title.text = item.title
         holder.body.text = item.body
     }
+
+    @SuppressLint("NotifyDataSetChanged")
     fun setItems(post: List<Post>) {
         postList = post
         notifyDataSetChanged()
