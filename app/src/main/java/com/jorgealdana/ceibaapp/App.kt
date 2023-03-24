@@ -8,7 +8,6 @@ import com.jorgealdana.ceibaapp.features.users.repository.UsersRepository
 import com.jorgealdana.ceibaapp.network.RestClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-
 class App : Application() {
 
     private val applicationScope = CoroutineScope(SupervisorJob())

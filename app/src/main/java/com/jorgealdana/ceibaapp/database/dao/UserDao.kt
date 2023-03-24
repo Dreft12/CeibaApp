@@ -15,4 +15,6 @@ interface UserDao {
 
     @Query("SELECT * FROM ${Constants.TABLE_USERS} ORDER BY id ASC")
     suspend fun getUsers(): List<User>
+    @Query("SELECT * FROM ${Constants.TABLE_USERS} WHERE id = :id")
+    suspend fun getUserById(id: Int): User
 }

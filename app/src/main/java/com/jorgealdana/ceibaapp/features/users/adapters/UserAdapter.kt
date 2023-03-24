@@ -29,7 +29,7 @@ class UserAdapter(private var userList: List<User>, private var onItemClickListe
         holder.phoneText.text = item.phone
 
         holder.verPosts.setOnClickListener {
-            onItemClickListener.onItemClick(position)
+            onItemClickListener.onItemClick(item)
         }
     }
 
